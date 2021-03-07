@@ -57,13 +57,16 @@ class PostsController extends Controller
         ]);
 
        if($request->hasFile('cover-image')){
+
+       
+       
         $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
         $extension=$request->file('cover_image')->getClientOriginalExtension();
-        $fileNameToStore = $filename.'-'.time().'.'.$extension;
+        $fileNameToStore = $filename.'-'.time().'-'.$extension;
         $path = $request->file('cover_image')->move(public_path('images'),$fileNameToStore);
        } else {
-            $fileNameToStore='noimage.png';
+        $fileNameToStore='noimage.png';
        }
         
             $post=  new post ; 
@@ -118,15 +121,11 @@ class PostsController extends Controller
             'body'=>'required'
         ]);
         
-        if($request->hasFile('cover-image')){
-            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
-            $extension=$request->file('cover_image')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'-'.time().'-'.$extension;
-            $path = $request->file('cover_image')->move(public_path('images'),$fileNameToStore);
-           } else {
-                $fileNameToStore='noimage.png';
-           }
+        $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
+        $extension=$request->file('cover_image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'-'.time().'-'.$extension;
+        $path = $request->file('cover_image')->move(public_path('images'),$fileNameToStore);
 
             $post=  Post :: find($id) ; 
             $post ->title = $request->input('title');
